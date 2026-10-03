@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="أداة مجانية لضغط الصور وتقليل حجمها مع التحكم في الجودة، مباشرة من المتصفح.">
+    <meta name="theme-color" content="#635bff">
+
+    <title>ImagePro | ضاغط الصور الذكي</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="./" aria-label="ImagePro الصفحة الرئيسية">
+                <span class="brand-icon">◈</span>
+                <span>Image<span class="brand-highlight">Pro</span></span>
+            </a>
+
+            <nav class="header-nav" aria-label="التنقل الرئيسي">
+                <a href="#compressor">ضغط الصور</a>
+                <a href="#features">المميزات</a>
+                <a href="#how-it-works">كيف تعمل الأداة؟</a>
+            </nav>
+
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="تغيير المظهر" title="تغيير المظهر">
+                🌙
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <span class="hero-badge">
+                    <span class="status-dot"></span>
+                    أداة مجانية لضغط الصور
+                </span>
+
+                <h1>
+                    صور أصغر.
+                    <span class="gradient-text">جودة أفضل.</span>
+                </h1>
+
+                <p class="hero-description">
+                    قلّل حجم صورك بسهولة، وتحكم في مستوى الجودة،
+                    ثم نزّل الصور المضغوطة مباشرة إلى جهازك.
+                </p>
+
+                <div class="hero-benefits">
+                    <span>✓ بدون إنشاء حساب</span>
+                    <span>✓ تحكم في الجودة</span>
+                    <span>✓ معاينة قبل التنزيل</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="compressor-section" id="compressor">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">مساحة العمل</span>
+                    <h2>ضغط الصور الذكي</h2>
+                    <p>اختر صورة من جهازك وابدأ تحسين حجمها.</p>
+                </div>
+
+                <div class="compressor-card">
+                    <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="اختر صورة لضغطها">
+                        <input id="imageInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+
+                        <div class="upload-icon">↑</div>
+
+                        <h3>أفلت صورتك هنا</h3>
+                        <p>أو اختر صورة من جهازك للبدء</p>
+
+                        <button class="primary-btn" id="selectImageBtn" type="button">
+                            <span>＋</span>
+                            اختر صورة
+                        </button>
+
+                        <div class="upload-formats">
+                            الصيغ المدعومة: JPG، PNG، WebP
+                        </div>
+                    </div>
+
+                    <div class="workspace" id="workspace" hidden>
+                        <div class="workspace-header">
+                            <div>
+                                <h3>إعدادات الضغط</h3>
+                                <p>خصص الصورة حسب احتياجاتك.</p>
+                            </div>
+
+                            <button class="text-btn" id="removeImageBtn" type="button">
+                                إزالة الصورة ×
+                            </button>
+                        </div>
+
+                        <div class="file-summary">
+                            <div class="file-icon">▧</div>
+                            <div class="file-details">
+                                <strong id="fileName">image.jpg</strong>
+                                <span id="originalSize">الحجم الأصلي: —</span>
+                                <span id="imageDimensions">الأبعاد: —</span>
+                            </div>
+                        </div>
+
+                        <div class="settings-grid">
+                            <div class="field-group">
+                                <label for="outputFormat">صيغة الصورة الناتجة</label>
+                                <select id="outputFormat">
+                                    <option value="image/webp">WebP — حجم صغير</option>
+                                    <option value="image/jpeg">JPEG — توافق واسع</option>
+                                    <option value="image/png">PNG — عند الحاجة للشفافية</option>
+                                </select>
+                                <span class="field-hint">
+                                    قد لا تحتفظ JPEG بالخلفية الشفافة.
+                                </span>
+                            </div>
+
+                            <div class="field-group">
+                                <div class="label-row">
+                                    <label for="qualityRange">جودة الصورة</label>
+                                    <strong id="qualityValue">80%</strong>
+                                </div>
+
+                                <input id="qualityRange" type="range" min="10" max="100" value="80" step="5">
+
+                                <div class="range-labels">
+                                    <span>حجم أصغر</span>
+                                    <span>جودة أعلى</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-row">
+                            <button class="primary-btn" id="compressBtn" type="button">
+                                ضغط الصورة الآن
+                                <span>→</span>
+                            </button>
+
+                            <button class="secondary-btn" id="resetSettingsBtn" type="button">
+                                إعادة الإعدادات
+                            </button>
+                        </div>
+
+                        <p class="status-message" id="statusMessage" role="status" aria-live="polite"></p>
+
+                        <div class="comparison-grid" id="comparisonGrid" hidden>
+                            <article class="preview-card">
+                                <div class="preview-heading">
+                                    <h4>الصورة الأصلية</h4>
+                                    <span class="size-badge" id="originalSizeBadge">—</span>
+                                </div>
+
+                                <div class="image-preview">
+                                    <img id="originalPreview" alt="معاينة الصورة الأصلية">
+                                </div>
+                            </article>
+
+                            <article class="preview-card">
+                                <div class="preview-heading">
+                                    <h4>الصورة المضغوطة</h4>
+                                    <span class="size-badge success-badge" id="compressedSizeBadge">—</span>
+                                </div>
+
+                                <div class="image-preview">
+                                    <img id="compressedPreview" alt="معاينة الصورة بعد الضغط">
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="compression-result" id="compressionResult" hidden>
+                            <div class="result-stat">
+                                <span>الحجم الأصلي</span>
+                                <strong id="resultOriginalSize">—</strong>
+                            </div>
+
+                            <div class="result-stat">
+                                <span>الحجم الجديد</span>
+                                <strong id="resultCompressedSize">—</strong>
+                            </div>
+
+                            <div class="result-stat highlight-stat">
+                                <span>نسبة التغيير</span>
+                                <strong id="savedPercentage">—</strong>
+                            </div>
+
+                            <a class="primary-btn download-btn" id="downloadBtn" href="#"
+                                download="compressed-image.webp">
+                                تنزيل الصورة
+                                <span>↓</span>
+                            </a>
+
+                            <p class="result-note" id="resultNote"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="privacy-note">
+                    <span>🔒</span>
+                    تتم معالجة الصور داخل متصفحك دون الحاجة إلى رفعها إلى خادم.
+                </p>
+            </div>
+        </section>
+
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">لماذا ImagePro؟</span>
+                    <h2>كل ما تحتاجه لضغط صورك</h2>
+                    <p>أدوات بسيطة بتجربة استخدام واضحة ومريحة.</p>
+                </div>
+
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon purple-icon">↘</div>
+                        <h3>تقليل حجم الصور</h3>
+                        <p>قلل مساحة الصور لتسهيل مشاركتها ورفعها على الإنترنت.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon blue-icon">◉</div>
+                        <h3>تحكم في الجودة</h3>
+                        <p>اختر مستوى الجودة الذي يناسب استخدامك للصورة.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon green-icon">▣</div>
+                        <h3>معاينة مباشرة</h3>
+                        <p>قارن الصورة الأصلية بالنسخة الناتجة قبل تنزيلها.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon orange-icon">⌂</div>
+                        <h3>خصوصية أفضل</h3>
+                        <p>تتم معالجة الصور محليًا داخل المتصفح دون رفعها إلى خادم.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="steps-section" id="how-it-works">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">خطوات بسيطة</span>
+                    <h2>كيف تضغط صورتك؟</h2>
+                </div>
+
+                <div class="steps-grid">
+                    <article class="step-card">
+                        <span class="step-number">01</span>
+                        <h3>اختر الصورة</h3>
+                        <p>حدد صورة من هاتفك أو جهاز الكمبيوتر.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <span class="step-number">02</span>
+                        <h3>اضبط الجودة</h3>
+                        <p>اختر صيغة الصورة وحدد مستوى الجودة المناسب.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <span class="step-number">03</span>
+                        <h3>اضغط ونزّل</h3>
+                        <p>عاين النتيجة ثم احفظ الصورة على جهازك.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container faq-container">
+                <div class="section-heading">
+                    <span class="eyebrow">أسئلة شائعة</span>
+                    <h2>هل لديك سؤال؟</h2>
+                </div>
+
+                <details class="faq-item">
+                    <summary>هل استخدام الأداة مجاني؟</summary>
+                    <p>نعم، الأداة مصممة للاستخدام المجاني دون إنشاء حساب.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>هل يتم رفع صوري إلى الإنترنت؟</summary>
+                    <p>تُعالج الصور داخل المتصفح باستخدام Canvas، ولا يتضمن هذا التطبيق رفعها إلى خادم.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>هل تعمل الأداة على الهاتف؟</summary>
+                    <p>نعم، التصميم متجاوب مع الهواتف والأجهزة اللوحية وأجهزة الكمبيوتر الحديثة.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>هل يقل حجم كل صورة بعد الضغط؟</summary>
+                    <p>ليس بالضرورة؛ فقد تكون بعض الصور مضغوطة مسبقًا. قارن حجم الملف الأصلي بالناتج قبل التنزيل.</p>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <a class="brand footer-brand" href="./">
+                <span class="brand-icon">◈</span>
+                <span>Image<span class="brand-highlight">Pro</span></span>
+            </a>
+
+            <p>أداة بسيطة لمساعدتك على تحسين صورك.</p>
+            <p class="copyright">
+                © <span id="currentYear"></span> ImagePro. جميع الحقوق محفوظة.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
